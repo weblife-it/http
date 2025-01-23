@@ -17,7 +17,9 @@ const httpOptions = {
 
 @Injectable()
 export class HeroesService {
-  heroesUrl = 'api/heroes';  // URL to web api
+  urlProgrammazione = 'http://localhost:8080/demo/programmazione';
+  urlStorico = 'http://localhost:8080/demo/storico';
+
   private handleError: HandleError;
 
   constructor(
@@ -26,74 +28,29 @@ export class HeroesService {
     this.handleError = httpErrorHandler.createHandleError('HeroesService');
   }
 
-  /** GET heroes from the server */
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
+  getProgrammazine(): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.urlProgrammazione)
       .pipe(
-        catchError(this.handleError('getHeroes', []))
+        catchError(this.handleError('getProgrammazine', []))
       );
   }
 
-  /* GET heroes whose name contains search term */
-  searchHeroes(term: string): Observable<Hero[]> {
-    term = term.trim();
+  getStorico(): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.urlStorico)
+      .pipe(
+        catchError(this.handleError('getStorico', []))
+      );
+  }
 
-    // Add safe, URL encoded search parameter if there is a search term
-    const options = term ?
-     { params: new HttpParams().set('name', term) } : {};
+  searchFilm(term: string): Observable<Hero[]> {
 
-    return this.http.get<Hero[]>(this.heroesUrl, options)
+    const id  =  parseInt(term, 10);
+    const urlStoricoId = this.urlStorico +"/"+ id;
+
+    return this.http.get<Hero[]>(urlStoricoId)
       .pipe(
         catchError(this.handleError<Hero[]>('searchHeroes', []))
       );
   }
 
-  // This JSONP example doesn't run. It is for the JSONP documentation only.
-  /** Imaginary API in a different domain that supports JSONP. */
-  heroesSearchUrl = 'https://heroes.com/search';
-
-  /** Does whatever is necessary to convert the result from API to Heroes */
-  jsonpResultToHeroes(result: any) { return result as Hero[]; }
-
-  /* GET heroes (using JSONP) whose name contains search term */
-  searchHeroesJsonp(term: string): Observable<Hero[]> {
-    term = term.trim();
-
-    const heroesUrl = `${this.heroesSearchUrl}?${term}`;
-    return this.http.jsonp(heroesUrl, 'callback')
-      .pipe(
-        map(result => this.jsonpResultToHeroes(result)),
-        catchError(this.handleError('searchHeroes', []))
-      );
-  }
-
-  //////// Save methods //////////
-
-  /** POST: add a new hero to the database */
-  addHero(hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
-      .pipe(
-        catchError(this.handleError('addHero', hero))
-      );
-  }
-
-  /** DELETE: delete the hero from the server */
-  deleteHero(id: number): Observable<unknown> {
-    const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
-    return this.http.delete(url, httpOptions)
-      .pipe(
-        catchError(this.handleError('deleteHero'))
-      );
-  }
-
-  /** PUT: update the hero on the server. Returns the updated hero upon success. */
-  updateHero(hero: Hero): Observable<Hero> {
-    httpOptions.headers =
-      httpOptions.headers.set('Authorization', 'my-new-auth-token');
-
-    return this.http.put<Hero>(this.heroesUrl, hero, httpOptions)
-      .pipe(
-        catchError(this.handleError('updateHero', hero))
-      );
-  }
 }

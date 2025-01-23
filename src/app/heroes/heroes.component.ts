@@ -13,9 +13,9 @@ import { HeroesService } from './heroes.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Hero[] = [];
-  editHero: Hero | undefined; // the hero currently being edited
-  heroName = '';
+  programmazione: Hero[] = [];
+  storico: Hero[] = [];
+  idFilm = '';
 
   constructor(private heroesService: HeroesService) {}
 
@@ -27,67 +27,30 @@ export class HeroesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getHeroes();
+    this.getProgrammazine();
   }
 
-  getHeroes(): void {
-    this.heroesService.getHeroes()
-      .subscribe(heroes => (this.heroes = heroes));
+  getProgrammazine(): void {
+    this.heroesService.getProgrammazine()
+      .subscribe(proiezioni => (this.programmazione = proiezioni));
+  }
+  
+  getStorico(): void {
+    this.heroesService.getStorico()
+      .subscribe(proiezioni => (this.programmazione = proiezioni));
   }
 
-  add(name: string): void {
-    this.editHero = undefined;
-    name = name.trim();
-    if (!name) {
-      return;
-    }
-
-    // The server will generate the id for this new hero
-    const newHero: Hero = { name } as Hero;
-    this.heroesService
-      .addHero(newHero)
-      .subscribe(hero => this.heroes.push(hero));
-  }
-
-  delete(hero: Hero): void {
-    this.heroes = this.heroes.filter(h => h !== hero);
-    this.heroesService
-      .deleteHero(hero.id)
-      .subscribe();
-    /*
-    // oops ... subscribe() is missing so nothing happens
-    this.heroesService.deleteHero(hero.id);
-    */
-  }
-
-  edit(heroName: string) {
-    this.update(heroName);
-    this.editHero = undefined;
-  }
 
   search(searchTerm: string) {
-    this.editHero = undefined;
+
     if (searchTerm) {
       this.heroesService
-        .searchHeroes(searchTerm)
-        .subscribe(heroes => (this.heroes = heroes));
+        .searchFilm(searchTerm)
+        .subscribe(proiezioni => (this.programmazione = proiezioni));
     } else {
-      this.getHeroes();
+      this.getStorico();
     }
   }
 
-  update(heroName: string) {
-    if (heroName && this.editHero && this.editHero.name !== heroName) {
-      this.heroesService
-        .updateHero({...this.editHero, name: heroName})
-        .subscribe(hero => {
-        // replace the hero in the heroes list with update from server
-        const ix = hero ? this.heroes.findIndex(h => h.id === hero.id) : -1;
-        if (ix > -1) {
-          this.heroes[ix] = hero;
-        }
-      });
-      this.editHero = undefined;
-    }
-  }
+  
 }

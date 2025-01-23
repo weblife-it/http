@@ -46,20 +46,20 @@ describe('HeroesService', () => {
     beforeEach(() => {
       heroService = TestBed.inject(HeroesService);
       expectedHeroes = [
-        { id: 1, name: 'A' },
-        { id: 2, name: 'B' },
+        { id: 1, titolo: 'A' },
+        { id: 2, titolo: 'B' },
        ] as Hero[];
     });
 
     it('should return expected heroes (called once)', () => {
 
-      heroService.getHeroes().subscribe({
+      heroService.getProgrammazine().subscribe({
         next: heroes => expect(heroes).toEqual(expectedHeroes, 'should return expected heroes'),
         error: fail,
       });
 
       // HeroService should have made one request to GET heroes from expected URL
-      const req = httpTestingController.expectOne(heroService.heroesUrl);
+      const req = httpTestingController.expectOne(heroService.urlProgrammazione);
       expect(req.request.method).toEqual('GET');
 
       // Respond with the mock heroes
@@ -68,24 +68,24 @@ describe('HeroesService', () => {
 
     it('should be OK returning no heroes', () => {
 
-      heroService.getHeroes().subscribe({
+      heroService.getProgrammazine().subscribe({
         next: heroes => expect(heroes.length).toEqual(0, 'should have empty heroes array'),
         error: fail,
       });
 
-      const req = httpTestingController.expectOne(heroService.heroesUrl);
+      const req = httpTestingController.expectOne(heroService.urlProgrammazione);
       req.flush([]); // Respond with no heroes
     });
 
     // This service reports the error but finds a way to let the app keep going.
     it('should turn 404 into an empty heroes result', () => {
 
-      heroService.getHeroes().subscribe({
+      heroService.getProgrammazine().subscribe({
         next: heroes => expect(heroes.length).toEqual(0, 'should return empty heroes array'),
         error: fail,
       });
 
-      const req = httpTestingController.expectOne(heroService.heroesUrl);
+      const req = httpTestingController.expectOne(heroService.urlProgrammazione);
 
       // respond with a 404 and the error message in the body
       const msg = 'deliberate 404 error';
@@ -94,14 +94,14 @@ describe('HeroesService', () => {
 
     it('should return expected heroes (called multiple times)', () => {
 
-      heroService.getHeroes().subscribe();
-      heroService.getHeroes().subscribe();
-      heroService.getHeroes().subscribe({
+      heroService.getProgrammazine().subscribe();
+      heroService.getProgrammazine().subscribe();
+      heroService.getProgrammazine().subscribe({
         next: heroes => expect(heroes).toEqual(expectedHeroes, 'should return expected heroes'),
         error: fail,
       });
 
-      const requests = httpTestingController.match(heroService.heroesUrl);
+      const requests = httpTestingController.match(heroService.urlProgrammazione);
       expect(requests.length).toEqual(3, 'calls to getHeroes()');
 
       // Respond to each request with different mock hero results
@@ -113,11 +113,11 @@ describe('HeroesService', () => {
 
   describe('#updateHero', () => {
     // Expecting the query form of URL so should not 404 when id not found
-    const makeUrl = (id: number) => `${heroService.heroesUrl}/?id=${id}`;
+    const makeUrl = (id: number) => `${heroService.urlProgrammazione}/?id=${id}`;
 
     it('should update a hero and return it', () => {
 
-      const updateHero: Hero = { id: 1, name: 'A' };
+      const updateHero: Hero = { id: 1, titolo: 'A' };
 
       heroService.updateHero(updateHero).subscribe({
         next: data => expect(data).toEqual(updateHero, 'should return the hero'),
@@ -125,7 +125,7 @@ describe('HeroesService', () => {
       });
 
       // HeroService should have made one request to PUT hero
-      const req = httpTestingController.expectOne(heroService.heroesUrl);
+      const req = httpTestingController.expectOne(heroService.urlProgrammazione);
       expect(req.request.method).toEqual('PUT');
       expect(req.request.body).toEqual(updateHero);
 
@@ -137,14 +137,14 @@ describe('HeroesService', () => {
 
     // This service reports the error but finds a way to let the app keep going.
     it('should turn 404 error into return of the update hero', () => {
-      const updateHero: Hero = { id: 1, name: 'A' };
+      const updateHero: Hero = { id: 1, titolo: 'A' };
 
       heroService.updateHero(updateHero).subscribe({
         next: data => expect(data).toEqual(updateHero, 'should return the update hero'),
         error: fail,
       });
 
-      const req = httpTestingController.expectOne(heroService.heroesUrl);
+      const req = httpTestingController.expectOne(heroService.urlProgrammazione);
 
       // respond with a 404 and the error message in the body
       const msg = 'deliberate 404 error';

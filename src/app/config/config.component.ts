@@ -19,50 +19,33 @@ export class ConfigComponent {
   configAny: any | undefined;
 
   constructor(private configService: ConfigService) {}
- 
-  ticketAlfresco() {
-    this.configService.getTicketAlfresco()
-      .subscribe(data => this.configTicketAlfresco = {
-     
-        entry: {
-          id: data.entry.id,
-          userId: data.entry.userId,
-        }
-      });
-      console.log('configTicketAlfresco: '+this.configTicketAlfresco);
-      console.log('configTicketAlfresco id: '+this.configTicketAlfresco?.entry.id);
-      
-}
 
-
-  infoDemo() {
-      this.configService.getProgrammazione()
-        .subscribe(data => this.config = {
-            heroesUrl: '?',
-            textfile:   JSON.stringify(data),
-            date:  new Date(),
-        });
-  }
-
-  provaAlfrescoTicket(id: any) {
-    this.configService.getConfigAlfrescoTicket(id)
+  showDemo() {
+    this.configService.getDemo()
       .subscribe(data => this.config = {
           heroesUrl: '?',
           textfile:   JSON.stringify(data),
           date:  new Date(),
       });
-}
+  } 
 
-  /*
-  provaAlfresco() {
-    
-    this.configService.getConfigAlfresco()
-    .subscribe({
-      next: data => this.configAlfresco = { ...data }, // success path
-      error: error => this.error = error, // error path
-    });
-  }*/
+  showProgrammazione() {
+    this.configService.getProgrammazione()
+      .subscribe(data => this.config = {
+          heroesUrl: '?',
+          textfile:   JSON.stringify(data),
+          date:  new Date(),
+      });
+  }
 
+  showStorico() {
+    this.configService.getStorico()
+      .subscribe(data => this.config = {
+          heroesUrl: '?',
+          textfile:   JSON.stringify(data),
+          date:  new Date(),
+      });
+  }
 
   clear() {
     this.config = undefined;
@@ -71,38 +54,6 @@ export class ConfigComponent {
     this.headers = [];
   }
 
-  showConfig() {
-    this.configService.getConfig()
-      .subscribe({
-        next: data => this.config = { ...data }, // success path
-        error: error => this.error = error, // error path
-      });
-  }
-  showConfig_v1() {
-    this.configService.getConfig_1()
-      .subscribe(data => this.config = {
-          heroesUrl: data.heroesUrl,
-          textfile:  data.textfile,
-          date: data.date,
-      });
-  }
-
-  showConfig_untyped_response() {
-    this.configService.getConfig_untyped_response()
-      .subscribe(data => this.config = {
-          heroesUrl: (data as any).heroesUrl,
-          textfile:  (data as any).textfile,
-          date: (data as any).date,
-      });
-    }
-
-
-
-  showConfig_v2() {
-    this.configService.getConfig()
-      // clone the data object, using its known Config shape
-      .subscribe(data => this.config = { ...data });
-  }
 
   showConfigResponse() {
     this.configService.getConfigResponse()

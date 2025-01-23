@@ -23,6 +23,13 @@ export class ConfigService {
 
   constructor(private http: HttpClient) { }
 
+  getDemo() {
+
+    const url ='http://localhost:8080/demo'
+    return this.http.get<Config>(url);
+
+   }
+
   getProgrammazione() {
 
     const url ='http://localhost:8080/demo/programmazione'
@@ -44,18 +51,7 @@ export class ConfigService {
    getStorico() {
 
     const url ='http://localhost:8080/demo/storico'
-    
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json;charset=UTF-8',
-        'Accept':  'application/json',
-        //'mode': 'no-cors',
-        //'Access-Control-Allow-Origin': '*',
-
-      })
-    };
-
-    return this.http.get<Config>(url, httpOptions);
+    return this.http.get<Config>(url);
 
    }
 
