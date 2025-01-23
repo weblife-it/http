@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HeroesComponent } from './heroes/heroes.component';
+import { ProgrammazioneComponent } from "./programmazione/programmazione.component";
 
 
 @Component({
@@ -10,8 +10,8 @@ import { HeroesComponent } from './heroes/heroes.component';
   templateUrl: './app.component.html',
   imports: [
     CommonModule,
-    HeroesComponent,
-  ],
+    ProgrammazioneComponent
+],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {

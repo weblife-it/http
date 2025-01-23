@@ -1,23 +1,23 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Hero } from './hero';
-import { HeroesService } from './heroes.service';
+import { Film } from './film';
+import { ProgrammazioneService } from './programmazione.service';
 
 @Component({
+  selector: 'app-programmazione',
   standalone: true,
-  selector: 'app-heroes',
-  templateUrl: './heroes.component.html',
   imports: [ CommonModule, FormsModule ],
-  providers: [HeroesService],
-  styleUrls: ['./heroes.component.css']
+  providers: [ProgrammazioneService],
+  templateUrl: './programmazione.component.html',
+  styleUrl: './programmazione.component.css'
 })
-export class HeroesComponent implements OnInit {
-  programmazione: Hero[] = [];
-  storico: Hero[] = [];
+export class ProgrammazioneComponent implements OnInit {
+  programmazione: Film[] = [];
+  storico: Film[] = [];
   idFilm = '';
 
-  constructor(private heroesService: HeroesService) {}
+  constructor(private service: ProgrammazioneService) {}
 
   @ViewChild('heroEditInput')
   set heroEditInput(element: ElementRef<HTMLInputElement>) {
@@ -31,12 +31,12 @@ export class HeroesComponent implements OnInit {
   }
 
   getProgrammazine(): void {
-    this.heroesService.getProgrammazine()
+    this.service.getProgrammazine()
       .subscribe(proiezioni => (this.programmazione = proiezioni));
   }
   
   getStorico(): void {
-    this.heroesService.getStorico()
+    this.service.getStorico()
       .subscribe(proiezioni => (this.programmazione = proiezioni));
   }
 
@@ -44,7 +44,7 @@ export class HeroesComponent implements OnInit {
   search(searchTerm: string) {
 
     if (searchTerm) {
-      this.heroesService
+      this.service
         .searchFilm(searchTerm)
         .subscribe(proiezioni => (this.programmazione = proiezioni));
     } else {

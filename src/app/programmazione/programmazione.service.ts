@@ -5,7 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable, catchError, map } from 'rxjs';
 
-import { Hero } from './hero';
+import { Film } from './film';
 import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
 
 const httpOptions = {
@@ -16,7 +16,7 @@ const httpOptions = {
 };
 
 @Injectable()
-export class HeroesService {
+export class ProgrammazioneService {
   urlProgrammazione = 'http://localhost:8080/demo/programmazione';
   urlStorico = 'http://localhost:8080/demo/storico';
 
@@ -28,28 +28,28 @@ export class HeroesService {
     this.handleError = httpErrorHandler.createHandleError('HeroesService');
   }
 
-  getProgrammazine(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.urlProgrammazione)
+  getProgrammazine(): Observable<Film[]> {
+    return this.http.get<Film[]>(this.urlProgrammazione)
       .pipe(
         catchError(this.handleError('getProgrammazine', []))
       );
   }
 
-  getStorico(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.urlStorico)
+  getStorico(): Observable<Film[]> {
+    return this.http.get<Film[]>(this.urlStorico)
       .pipe(
         catchError(this.handleError('getStorico', []))
       );
   }
 
-  searchFilm(term: string): Observable<Hero[]> {
+  searchFilm(term: string): Observable<Film[]> {
 
     const id  =  parseInt(term, 10);
     const urlStoricoId = this.urlStorico +"/"+ id;
 
-    return this.http.get<Hero[]>(urlStoricoId)
+    return this.http.get<Film[]>(urlStoricoId)
       .pipe(
-        catchError(this.handleError<Hero[]>('searchHeroes', []))
+        catchError(this.handleError<Film[]>('searchFilm', []))
       );
   }
 

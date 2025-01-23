@@ -1,0 +1,28 @@
+
+<button type="button" (click)="getProgrammazine()">
+    Programmazione
+  </button>
+  
+  <button type="button" (click)="getStorico()">
+    Storico
+  </button>
+  
+  <div class="search">
+    <label for="hero-name">Id Film: </label>
+    <input type="text" [(ngModel)]="idFilm" id="hero-name">
+  
+  
+  
+    <button type="button" (click)="search(idFilm)">
+      Search
+    </button>
+  
+  </div>
+  
+  <ul class="heroes">
+    <li *ngFor="let proiezione of programmazione">
+      <span class="badge">{{ proiezione.id || -1 }}</span>
+      <span class="name">{{proiezione.film.titolo}}, {{proiezione.data|date}}, sala {{proiezione.sala}}</span>   
+    </li>
+  </ul>
+  
