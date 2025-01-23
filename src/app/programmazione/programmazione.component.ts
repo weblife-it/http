@@ -15,16 +15,10 @@ import { ProgrammazioneService } from './programmazione.service';
 export class ProgrammazioneComponent implements OnInit {
   programmazione: Film[] = [];
   storico: Film[] = [];
-  idFilm = '';
+  dataInizio: any;
+  dataFine: any;
 
   constructor(private service: ProgrammazioneService) {}
-
-  @ViewChild('heroEditInput')
-  set heroEditInput(element: ElementRef<HTMLInputElement>) {
-    if (element) {
-      element.nativeElement.focus();
-    }
-  }
 
   ngOnInit() {
     this.getProgrammazione();
@@ -41,14 +35,14 @@ export class ProgrammazioneComponent implements OnInit {
   }
 
 
-  search(searchTerm: string) {
-
-    if (searchTerm) {
+  search(dataInizio: string, dataFine: string) {
+    if (dataInizio && dataFine) {
       this.service
-        .searchFilm(searchTerm)
-        .subscribe(proiezioni => (this.programmazione = proiezioni));
+        .searchProgrammazione(dataInizio, dataFine)
+        .subscribe(proiezioni => (this.programmazione = proiezioni));  
+
     } else {
-      this.getStorico();
+      this.getProgrammazione();
     }
   }
 

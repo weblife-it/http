@@ -6,8 +6,6 @@ import {
 import { Observable, of, startWith, tap } from 'rxjs';
 
 import { RequestCache } from '../request-cache.service';
-import { searchUrl } from '../package-search/package-search.service';
-
 
 /**
  * If request is cacheable (e.g., package search) and
@@ -47,7 +45,8 @@ function isCacheable(req: HttpRequest<any>) {
   // Only GET requests are cacheable
   return req.method === 'GET' &&
     // Only npm package search is cacheable in this app
-    -1 < req.url.indexOf(searchUrl);
+    //-1 < req.url.indexOf(searchUrl);
+    false
 }
 
 /**

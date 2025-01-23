@@ -3,6 +3,4 @@ export interface Film {
     film: any;
     sala: string;
     data: string;
-  
-    name: string;
   }

@@ -11,7 +11,6 @@ import { noopInterceptorProvider } from '../app/http-interceptors/noop-intercept
 
 // #region example helper services; not shown in docs
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from '../app/in-memory-data.service';
 
 import { AuthService } from '../app/auth.service';
 import { HttpErrorHandler } from '../app/http-error-handler.service';
@@ -38,18 +37,6 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     { provide: RequestCache, useClass: RequestCacheWithMap },
 
-    importProvidersFrom(
-      // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-      // and returns simulated server responses.
-      // Remove it when a real server is ready to receive requests.
-      HttpClientInMemoryWebApiModule.forRoot(
-        InMemoryDataService, {
-          dataEncapsulation: false,
-          passThruUnknownUrl: true,
-          put204: false // return entity after PUT/update
-        }
-      )
-    ),
     // provideProtractorTestingSupport(), // essential for e2e testing
   ]
 };

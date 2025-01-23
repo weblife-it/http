@@ -8,10 +8,11 @@
   </button>
   
   <div class="search">
-    <label for="name">Id Film: </label>
-    <input type="text" [(ngModel)]="idFilm" id="name"> 
-  
-    <button type="button" (click)="search(idFilm)">
+    <label for="dataInizio">Data inizio</label>
+    <input type="text" [(ngModel)]="dataInizio" id="dataInizio"> 
+    <label for="dataFine">Data fine</label>
+    <input type="text" [(ngModel)]="dataFine" id="dataFine">
+    <button type="button" (click)="search(dataInizio, dataFine)">
       Search
     </button>
   

@@ -42,12 +42,10 @@ export class ProgrammazioneService {
       );
   }
 
-  searchFilm(term: string): Observable<Film[]> {
-
-    const id  =  parseInt(term, 10);
-    const urlStoricoId = this.urlStorico +"/"+ id;
-    //console.log(urlStoricoId);
-    return this.http.get<Film[]>(urlStoricoId)
+  searchProgrammazione(dataInizio: string, dataFine: string): Observable<Film[]> {
+    
+    const url = this.urlProgrammazione +"/"+ dataInizio+"/"+dataFine;
+    return this.http.get<Film[]>(url)
       .pipe(
         catchError(this.handleError<Film[]>('searchFilm', []))
       );
