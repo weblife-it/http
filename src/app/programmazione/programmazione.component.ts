@@ -27,11 +27,11 @@ export class ProgrammazioneComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProgrammazine();
+    this.getProgrammazione();
   }
 
-  getProgrammazine(): void {
-    this.service.getProgrammazine()
+  getProgrammazione(): void {
+    this.service.getProgrammazione()
       .subscribe(proiezioni => (this.programmazione = proiezioni));
   }
   

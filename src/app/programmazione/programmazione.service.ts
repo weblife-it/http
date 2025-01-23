@@ -11,7 +11,7 @@ import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    Authorization: 'my-auth-token'
+    //Authorization: 'my-auth-token'
   })
 };
 
@@ -25,13 +25,13 @@ export class ProgrammazioneService {
   constructor(
     private http: HttpClient,
     httpErrorHandler: HttpErrorHandler) {
-    this.handleError = httpErrorHandler.createHandleError('HeroesService');
+    this.handleError = httpErrorHandler.createHandleError('ProgrammazioneService');
   }
 
-  getProgrammazine(): Observable<Film[]> {
+  getProgrammazione(): Observable<Film[]> {
     return this.http.get<Film[]>(this.urlProgrammazione)
       .pipe(
-        catchError(this.handleError('getProgrammazine', []))
+        catchError(this.handleError('getProgrammazione', []))
       );
   }
 
@@ -46,7 +46,7 @@ export class ProgrammazioneService {
 
     const id  =  parseInt(term, 10);
     const urlStoricoId = this.urlStorico +"/"+ id;
-
+    //console.log(urlStoricoId);
     return this.http.get<Film[]>(urlStoricoId)
       .pipe(
         catchError(this.handleError<Film[]>('searchFilm', []))

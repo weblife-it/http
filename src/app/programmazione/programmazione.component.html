@@ -1,5 +1,5 @@
 
-<button type="button" (click)="getProgrammazine()">
+<button type="button" (click)="getProgrammazione()">
     Programmazione
   </button>
   
@@ -8,10 +8,8 @@
   </button>
   
   <div class="search">
-    <label for="hero-name">Id Film: </label>
-    <input type="text" [(ngModel)]="idFilm" id="hero-name">
-  
-  
+    <label for="name">Id Film: </label>
+    <input type="text" [(ngModel)]="idFilm" id="name"> 
   
     <button type="button" (click)="search(idFilm)">
       Search
@@ -19,7 +17,7 @@
   
   </div>
   
-  <ul class="heroes">
+  <ul class="programmazione">
     <li *ngFor="let proiezione of programmazione">
       <span class="badge">{{ proiezione.id || -1 }}</span>
       <span class="name">{{proiezione.film.titolo}}, {{proiezione.data|date}}, sala {{proiezione.sala}}</span>   
